@@ -1,0 +1,55 @@
+<h1><%= @book.title %></h1>
+
+<div>
+  <p><strong>Author:</strong> <%= @book.author %></p>
+  <p><strong>ISBN:</strong> <%= @book.isbn %></p>
+  <p><strong>Status:</strong> <%= @book.status %></p>
+</div>
+
+<% if @book.available? %>
+  <div>
+    <h3>Borrow this book</h3>
+    <%= form_tag(borrow_book_path(@book), method: :post) do %>
+      <div>
+        <%= label_tag :borrower_name, "Your Name:" %>
+        <%= text_field_tag :borrower_name %>
+      </div>
+      <%= submit_tag "Borrow Book" %>
+    <% end %>
+  </div>
+<% else %>
+  <div>
+    <p>Currently borrowed by: <%= @book.current_borrow_record&.borrower_name %></p>
+    <%= button_to "Return Book", return_book_path(@book), method: :post %>
+  </div>
+<% end %>
+
+<h3>Borrowing History</h3>
+<% if @book.borrow_records.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Borrower</th>
+        <th>Borrowed Date</th>
+        <th>Returned Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @book.borrow_records.order(borrowed_at: :desc).each do |record| %>
+        <tr>
+          <td><%= record.borrower_name %></td>
+          <td><%= record.borrowed_at&.strftime("%B %d, %Y") %></td>
+          <td><%= record.returned_at&.strftime("%B %d, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No borrowing history yet.</p>
+<% end %>
+
+<div>
+  <%= link_to 'Edit', edit_book_path(@book) %> |
+  <%= link_to 'Back to List', books_path %>
+</div>
+

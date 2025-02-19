@@ -1,0 +1,168 @@
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='LibraryApp'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-02-17 22:05:18.313468', '2025-02-17 22:05:18.313475') RETURNING "key" /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='LibraryApp'*/[0m
+Migrating to CreateBooks (20250217220004)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='LibraryApp'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "books" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar NOT NULL, "author" varchar, "isbn" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250217220004') RETURNING "version" /*application='LibraryApp'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='LibraryApp'*/[0m
+Migrating to CreateBorrowRecords (20250217220428)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='LibraryApp'*/[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "borrow_records" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "book_id" integer NOT NULL, "borrower_name" varchar NOT NULL, "borrowed_at" datetime(6), "returned_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_abdb924198"
+FOREIGN KEY ("book_id")
+  REFERENCES "books" ("id")
+) /*application='LibraryApp'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_borrow_records_on_book_id" ON "borrow_records" ("book_id") /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250217220428') RETURNING "version" /*application='LibraryApp'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='LibraryApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='LibraryApp'*/[0m
+Started GET "/" for 127.0.0.1 at 2025-02-18 01:13:16 +0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='LibraryApp'*/[0m
+Processing by BooksController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/index.html.erb within layouts/application
+  [1m[36mBook Load (1.9ms)[0m  [1m[34mSELECT "books".* FROM "books" /*action='index',application='LibraryApp',controller='books'*/[0m
+  ↳ app/views/books/index.html.erb:14
+  Rendered books/index.html.erb within layouts/application (Duration: 3.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.4ms | GC: 0.0ms)
+Completed 200 OK in 129ms (Views: 29.6ms | ActiveRecord: 2.0ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/assets/application-8b441ae0.css" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/application-bfcdf840.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/turbo.min-fae85750.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/stimulus.min-4b1e420e.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/controllers/index-ee64e1f1.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/stimulus-loading-1fc53fe7.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/controllers/application-3affb389.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/assets/controllers/hello_controller-708796bd.js" for 127.0.0.1 at 2025-02-18 01:13:17 +0300
+Started GET "/books/new" for 127.0.0.1 at 2025-02-18 01:13:19 +0300
+Processing by BooksController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/new.html.erb within layouts/application
+  Rendered books/new.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.6ms | GC: 0.0ms)
+Completed 200 OK in 61ms (Views: 17.3ms | ActiveRecord: 0.8ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/books/new" for 127.0.0.1 at 2025-02-18 01:15:09 +0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='LibraryApp'*/[0m
+Processing by BooksController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/new.html.erb within layouts/application
+  Rendered books/new.html.erb within layouts/application (Duration: 35.7ms | GC: 11.9ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.0ms | GC: 11.9ms)
+Completed 500 Internal Server Error in 155ms (ActiveRecord: 1.8ms (0 queries, 0 cached) | GC: 47.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `any?' for nil:NilClass)
+Caused by: NoMethodError (undefined method `any?' for nil:NilClass)
+
+Information for: ActionView::Template::Error (undefined method `any?' for nil:NilClass):
+    75: # app/views/borrow_records/borrower_history.html.erb
+    76: <h1>Borrowing History for <%= @borrower_name %></h1>
+    77: 
+    78: <% if @borrow_records.any? %>
+    79:   <table>
+    80:     <thead>
+    81:       <tr>
+  
+app/views/books/new.html.erb:78
+
+Information for cause: NoMethodError (undefined method `any?' for nil:NilClass):
+  
+app/views/books/new.html.erb:78
+Started GET "/" for 127.0.0.1 at 2025-02-18 01:15:17 +0300
+Processing by BooksController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/index.html.erb within layouts/application
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" /*action='index',application='LibraryApp',controller='books'*/[0m
+  ↳ app/views/books/index.html.erb:14
+  Rendered books/index.html.erb within layouts/application (Duration: 3.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.0ms | GC: 0.0ms)
+Completed 200 OK in 39ms (Views: 13.3ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/books/new" for 127.0.0.1 at 2025-02-18 01:15:18 +0300
+Processing by BooksController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/new.html.erb within layouts/application
+  Rendered books/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.4ms | GC: 0.4ms)
+Completed 500 Internal Server Error in 21ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `any?' for nil:NilClass)
+Caused by: NoMethodError (undefined method `any?' for nil:NilClass)
+
+Information for: ActionView::Template::Error (undefined method `any?' for nil:NilClass):
+    75: # app/views/borrow_records/borrower_history.html.erb
+    76: <h1>Borrowing History for <%= @borrower_name %></h1>
+    77: 
+    78: <% if @borrow_records.any? %>
+    79:   <table>
+    80:     <thead>
+    81:       <tr>
+  
+app/views/books/new.html.erb:78
+
+Information for cause: NoMethodError (undefined method `any?' for nil:NilClass):
+  
+app/views/books/new.html.erb:78
+Started GET "/books/new" for 127.0.0.1 at 2025-02-18 01:17:13 +0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='LibraryApp'*/[0m
+Processing by BooksController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering books/new.html.erb within layouts/application
+  Rendered books/new.html.erb within layouts/application (Duration: 28.2ms | GC: 11.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 43.6ms | GC: 12.7ms)
+Completed 200 OK in 158ms (Views: 52.5ms | ActiveRecord: 1.3ms (0 queries, 0 cached) | GC: 43.0ms)
+
+
+Started POST "/books" for 127.0.0.1 at 2025-02-18 01:17:41 +0300
+Processing by BooksController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "book"=>{"title"=>"atomic habbits", "author"=>"james clear", "isbn"=>"jrui89"}, "commit"=>"Create Book"}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='LibraryApp',controller='books'*/[0m
+  ↳ app/controllers/books_controller.rb:21:in `create'
+  [1m[36mBook Create (2.2ms)[0m  [1m[32mINSERT INTO "books" ("title", "author", "isbn", "status", "created_at", "updated_at") VALUES ('atomic habbits', 'james clear', 'jrui89', NULL, '2025-02-17 22:17:41.292560', '2025-02-17 22:17:41.292560') RETURNING "id" /*action='create',application='LibraryApp',controller='books'*/[0m
+  ↳ app/controllers/books_controller.rb:21:in `create'
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='LibraryApp',controller='books'*/[0m
+  ↳ app/controllers/books_controller.rb:21:in `create'
+Redirected to http://localhost:3000/books/1
+Completed 302 Found in 25ms (ActiveRecord: 5.0ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/books/1" for 127.0.0.1 at 2025-02-18 01:17:41 +0300
+Processing by BooksController#show as TURBO_STREAM
+  Parameters: {"id"=>"1"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = 1 LIMIT 1 /*action='show',application='LibraryApp',controller='books'*/[0m
+  ↳ app/controllers/books_controller.rb:61:in `set_book'
+  Rendering layout layouts/application.html.erb
+  Rendering books/show.html.erb within layouts/application
+  Rendered books/show.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.1ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 35ms (ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `available?' for #<Book id: 1, title: "atomic habbits", author: "james clear", isbn: "jrui89", status: nil, created_at: "2025-02-17 22:17:41.292560000 +0000", updated_at: "2025-02-17 22:17:41.292560000 +0000">)
+Caused by: NoMethodError (undefined method `available?' for #<Book id: 1, title: "atomic habbits", author: "james clear", isbn: "jrui89", status: nil, created_at: "2025-02-17 22:17:41.292560000 +0000", updated_at: "2025-02-17 22:17:41.292560000 +0000">)
+
+Information for: ActionView::Template::Error (undefined method `available?' for #<Book id: 1, title: "atomic habbits", author: "james clear", isbn: "jrui89", status: nil, created_at: "2025-02-17 22:17:41.292560000 +0000", updated_at: "2025-02-17 22:17:41.292560000 +0000">):
+     6:   <p><strong>Status:</strong> <%= @book.status %></p>
+     7: </div>
+     8: 
+     9: <% if @book.available? %>
+    10:   <div>
+    11:     <h3>Borrow this book</h3>
+    12:     <%= form_tag(borrow_book_path(@book), method: :post) do %>
+  
+app/views/books/show.html.erb:9
+
+Information for cause: NoMethodError (undefined method `available?' for #<Book id: 1, title: "atomic habbits", author: "james clear", isbn: "jrui89", status: nil, created_at: "2025-02-17 22:17:41.292560000 +0000", updated_at: "2025-02-17 22:17:41.292560000 +0000">):
+  
+app/views/books/show.html.erb:9
