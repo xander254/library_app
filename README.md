@@ -36,27 +36,61 @@ Start the Rails Console
 ```
 Add a New Book
 ```bash
-  book = Book.create(title: "Atomic Habbits", author: "James Clear")
+  book = Book.create(title: "Atomic Habits", author: "James Clear")
+
+  #create multiple books at once
+  Book.create([
+  {title: "The Alchemist", author: "Paulo Coelho"},
+  {title: "Thinking, Fast and Slow", author: "Daniel Kahneman"}
+])
 ``` 
 List All Books
 ```bash
-  book = Book.first # Selects the first book in the database
-  Borrowing.create(book: book, borrower_name: "Omwami", borrowed_at: Time.now)
+  # Get all books
+  all_books = Book.all
+
+  # Find a book by ID
+  specific_book = Book.find(1)
+
+  # Find a book by title
+  book_by_title = Book.find_by(title: "Atomic Habits")
+
+  #  Find books by author
+   books_by_author = Book.where(author: "James Clear")
+```
+Updating a Book
+```bash
+  book = Book.find_by(title: "Atomic Habits")
+  book.update(title: "Atomic Habits: Tiny Changes, Remarkable Results")
 ```
 Return a Book
 ```bash
-  Borrowing.where(book: book, returned_at: nil).first borrowing.update(returned_at: Time.now)
+  book = Book.find_by(title: "The Alchemist")
+
+  borrowing = Borrowing.where(book: book, returned_at: nil).first
+
+  # Update the returned_at timestamp
+   borrowing.update(returned_at: Time.now)
 ```  
 View Borrowing History of a Book
 ```bash
+  book = Book.find_by(title: "The Alchemist")
+  # all borrowings of a specific book....first query + the next query
   book.borrowings
+
+  #by a specific person
+  Borrowing.where(borrower_name: "William Ongeri")
+  
+  # View active (unreturned) borrowings
+  Borrowing.where(returned_at: nil)
 ``` 
-View Borrowing History of a Specific Person
-```bash
-  Borrowing.where(borrower_name: "Omwami")
-```
 Delete a Book
 ```bash
-  Book.find_by(title: "Atomic Habbits") book.destroy
+  Book.find_by(title: "Atomic Habits") book.destroy
 ```
+Exiting the Console
+```bash
+  exit
+```
+
 This lets you manage the library entirely from the console.
